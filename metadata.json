@@ -1,0 +1,8 @@
+{
+  "name": "Ramadhan Global",
+  "description": "A comprehensive Islamic companion for Ramadhan and beyond, featuring prayer times, Quran, Zakat calculator, and AI Fiqih assistant.",
+  "requestFramePermissions": [
+    "geolocation",
+    "notifications"
+  ]
+}

@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        Int         @id @default(autoincrement())
+  name      String
+  email     String      @unique
+  password  String
+  country   String?
+  createdAt DateTime    @default(now())
+  logs      IbadahLog[]
+  zakat     ZakatLog[]
+  aiHistory AIHistory[]
+}
+
+model IbadahLog {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  date         String   // YYYY-MM-DD
+  subuh        Boolean  @default(false)
+  dzuhur       Boolean  @default(false)
+  ashar        Boolean  @default(false)
+  maghrib      Boolean  @default(false)
+  isya         Boolean  @default(false)
+  puasa        Boolean  @default(false)
+  tarawih      Boolean  @default(false)
+  tadarusAyat  Int      @default(0)
+
+  @@unique([userId, date])
+}
+
+model ZakatLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  type      String   // fitrah, maal, emas, perdagangan
+  amount    Float
+  createdAt DateTime @default(now())
+}
+
+model AIHistory {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+}
+
+model City {
+  id        Int     @id @default(autoincrement())
+  name      String
+  country   String
+  latitude  Float
+  longitude Float
+  timezone  String
+}
